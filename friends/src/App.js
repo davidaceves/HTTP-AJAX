@@ -60,7 +60,6 @@ class App extends Component {
       <div className="App">
         <Friends friends={ this.state.friends } />
         <Form addFriend={ this.addFriend } nameHandler={ this.nameHandler } ageHandler={ this.ageHandler } emailHandler={ this.emailHandler } name={ this.state.name } age={ this.state.age } email={ this.state.email }  />
-        
       </div>
     );
   }
