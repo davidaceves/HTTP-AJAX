@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Route } from "react-router-dom";
+import { BrowserRouter as Route, NavLink } from "react-router-dom";
 import axios from "axios";
 
 import './App.css';
@@ -19,6 +19,10 @@ class App extends Component {
     };
   }
 
+  updateFriends = newFriends => {
+    this.setState({ friends: newFriends });
+  };
+
   componentDidMount() {
     axios
     .get("http://localhost:5000/friends")
@@ -35,49 +39,27 @@ class App extends Component {
     }));
   };
 
-  // nameHandler = event => {
-  //   this.setState({ name: event.target.value });
-  // };
-
-  // ageHandler = event => {
-  //   this.setState({ age: event.target.value });
-  // };
-
-  // emailHandler = event => {
-  //   this.setState({ email: event.target.value });
-  // };
-
   addFriend = event => {
     event.preventDefault();
     axios 
       .post("http://localhost:5000/friends", this.state.friend)
       .then(response => {
-        console.log(response.data)
         this.setState({ friends: response.data} );
-        // this.history.push("/");
+        this.state.history.push("/");
       })
       .catch(err => console.log(err));
-    // this.setState(prevState => {
-    //   return {
-    //     friends: [
-    //       ...prevState.friends, 
-    //       {
-    //         name: prevState.name,
-    //         age: prevState.age,
-    //         email: prevState.email
-    //       }
-    //     ],
-    //     name: "",
-    //     age: "",
-    //     email: ""
-    //   } 
-    // })
   }
 
   render() {
     return (
       <div className="App">
-        <Friends friends={ this.state.friends } />
+        <NavLink exact to="/">
+          Home
+        </NavLink>
+        <NavLink exact to="/friends">
+          Friends
+        </NavLink>
+        <Route path="/friends" render={props => <Friends {...props} friends={ this.state.friends } updateFriends={ this.updateFriends }/>} /> 
         <Form addFriend={ this.addFriend } changeHandler={ this.changeHandler } name={ this.state.friend.name } age={ this.state.friend.age } email={ this.state.friend.email }  />
       </div>
     );
