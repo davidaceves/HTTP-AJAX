@@ -16,12 +16,12 @@ function Friend (props) {
             .catch(err => console.log(err));
     };
     return (
-       <div className="friend">
-       <span onClick={ deleteFriend }>Delete</span>
-        <p>name: { props.friend.name } </p>
-        <p>age:  {props.friend.age }</p>
-        <p>email:  {props.friend.email }</p>   
-       </div>
+        <div className="friend">
+            <p>name: { props.friend.name } </p>
+            <p>age:  {props.friend.age }</p>
+            <p>email:  {props.friend.email }</p> 
+            <span onClick={ deleteFriend }>Delete</span>  
+        </div>
     )
 }
 

@@ -4,3 +4,14 @@
     padding: 2%;
     background: lightgray;
 }
+
+span {
+    display: flex;
+    cursor: pointer;
+    width: 10%;
+    margin-top: 25px;
+    justify-content: center;
+    border: 1px solid black;
+    background: red;
+    padding: 1%;
+}

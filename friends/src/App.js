@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Route, NavLink } from "react-router-dom";
+import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
 import axios from "axios";
 
 import './App.css';
@@ -45,23 +45,25 @@ class App extends Component {
       .post("http://localhost:5000/friends", this.state.friend)
       .then(response => {
         this.setState({ friends: response.data} );
-        this.state.history.push("/");
+        this.state.history.push("/friends");
       })
       .catch(err => console.log(err));
   }
 
   render() {
     return (
-      <div className="App">
-        <NavLink exact to="/">
-          Home
-        </NavLink>
-        <NavLink exact to="/friends">
-          Friends
-        </NavLink>
-        <Route path="/friends" render={props => <Friends {...props} friends={ this.state.friends } updateFriends={ this.updateFriends }/>} /> 
-        <Form addFriend={ this.addFriend } changeHandler={ this.changeHandler } name={ this.state.friend.name } age={ this.state.friend.age } email={ this.state.friend.email }  />
-      </div>
+      <Router>
+        <div className="App">
+          <NavLink exact to="/">
+            Home
+          </NavLink>
+          <NavLink exact to="/friends">
+            Friends
+          </NavLink>
+          <Route exact path="/friends" render={props => <Friends {...props} friends={ this.state.friends } updateFriends={ this.updateFriends }/>} /> 
+          <Form addFriend={ this.addFriend } changeHandler={ this.changeHandler } name={ this.state.friend.name } age={ this.state.friend.age } email={ this.state.friend.email }  />
+        </div>
+      </Router>
     );
   }
 }
