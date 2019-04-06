@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { BrowserRouter as Router, Route, NavLink } from "react-router-dom";
+import { Route, NavLink } from "react-router-dom";
 import axios from "axios";
 
 import './App.css';
@@ -50,9 +50,20 @@ class App extends Component {
       .catch(err => console.log(err));
   }
 
+  changeFriend = event => {
+    event.preventDefault();
+    axios 
+      .put("http://localhost:5000/friends/${id}", this.state.friend)
+      .then(response => {
+        this.setState({ friends: response.data} );
+        this.state.history.push("/friends/:id");
+      })
+      .catch(err => console.log(err));
+  }
+
   render() {
     return (
-      <Router>
+      
         <div className="App">
           <NavLink exact to="/">
             Home
@@ -60,10 +71,11 @@ class App extends Component {
           <NavLink exact to="/friends">
             Friends
           </NavLink>
-          <Route exact path="/friends" render={props => <Friends {...props} friends={ this.state.friends } updateFriends={ this.updateFriends }/>} /> 
+          <Route exact path="/friends" render={props => <Friends {...props} friends={ this.state.friends } updateFriends={ this.updateFriends } changeFriend={ this.changeFriend }/>} /> 
           <Form addFriend={ this.addFriend } changeHandler={ this.changeHandler } name={ this.state.friend.name } age={ this.state.friend.age } email={ this.state.friend.email }  />
+          
         </div>
-      </Router>
+      
     );
   }
 }
