@@ -17,14 +17,18 @@ function Friend (props) {
             })
             .catch(err => console.log(err));
     };
+
+
     return (
+        
         <div className="friend">
+        
             <p>name: { props.friend.name } </p>
             <p>age:  {props.friend.age }</p>
             <p>email:  {props.friend.email }</p> 
             <span onClick={ deleteFriend }>Delete</span>
             <NavLink exact to={`friends/${ props.friend.id }`}>
-                <span onClick={ props.changeFriend }>Update</span>
+                <span onClick={ props.changeFriend(props.friend.id, 'hello') }>Update</span>
             </NavLink>  
         </div>
     )

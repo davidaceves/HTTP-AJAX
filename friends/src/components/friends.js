@@ -8,7 +8,7 @@ function Friends (props) {
       
         <div>
         { props.friends.map(friend => {
-        return  <Friend key={ friend.id } updateFriends={ props.updateFriends } friend={ friend } changeFriend={ props.changeFriend } />
+            return  <Friend key={ friend.id } updateFriends={ props.updateFriends } friend={ friend } changeFriend={ props.changeFriend }/>
         })}
         </div>
        
