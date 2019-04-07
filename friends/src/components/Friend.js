@@ -27,7 +27,7 @@ function Friend (props) {
             <p>age:  {props.friend.age }</p>
             <p>email:  {props.friend.email }</p> 
             <span onClick={ deleteFriend }>Delete</span>
-            <NavLink exact to={`friends/changefriend`}>
+            <NavLink exact to={`friends/${props.friend.id}`}>
                 <span>Update</span>
             </NavLink>  
         </div>

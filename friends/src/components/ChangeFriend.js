@@ -24,7 +24,7 @@ class ChangeFriend extends Component {
       return (
         
         <div>
-        <form onSubmit={ this.props.changeFriend('1', this.state.friend) }>
+        <form onSubmit={ this.props.changeFriend(this.props.match.params.id, this.state.friend) }>
             <input value={ this.state.name } name="name" placeholder="name" onChange={ this.updateHandler }/>
             <input value={ this.state.age } name="age" placeholder="age" onChange={ this.updateHandler }/>
             <input value={ this.state.email } name="email" placeholder="email" onChange={ this.updateHandler }/>

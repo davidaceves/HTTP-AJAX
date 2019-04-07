@@ -74,9 +74,9 @@ class App extends Component {
           <Route exact path="/friends" render={props => <Friends {...props} friends={ this.state.friends } updateFriends={ this.updateFriends }/>} /> 
           <Form addFriend={ this.addFriend } changeHandler={ this.changeHandler } name={ this.state.friend.name } age={ this.state.friend.age } email={ this.state.friend.email }  />
           
-          <Route exact path="/friends/changefriend" render={props => <ChangeFriend {...props} changeFriend={this.changeFriend} friend={this.state.friend} updateFriends={ this.updateFriends } />}/>
+          <Route exact path="/friends/:id" render={props => <ChangeFriend {...props} changeFriend={this.changeFriend} friend={this.state.friend} updateFriends={ this.updateFriends } />}/>
 
-          {/* <Route exact path="/friends/:id" render={props => <Friend {...props} friend={this.state.friend} />}/> */}
+          <Route exact path="/friends/:id" render={props => <Friend {...props} friend={this.state.friend} />}/>
         </div>
       
     );
