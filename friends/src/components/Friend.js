@@ -12,19 +12,31 @@ class Friend extends Component {
           }  
         };
       
+    // componentDidMount() {
+    //     axios
+    //     .get("http://localhost:5000/friends")
+    //     .then(response => {
+    //       this.setState({ friends: response.data })
+    //     })
+    //     .catch(err => console.log(err));
+    //   }
 
-    componentDidMount() {
+    // componentDidMount() {
+    //     const id  = this.props.match.params.id;
+        
+    //     this.fetchFriend(id);
+    // }
+
+    fetchFriend = id => {
         axios
-        .get("http://localhost:5000/friends")
-        .then(response => {
-          this.setState({ friends: response.data })
-        })
-        .catch(err => console.log(err));
-      }
-
-    updateFriend = newFriend => {
-        this.setState({ friend: newFriend });
-    };  
+          .get(`http://localhost:5000/friends/${id}`)
+          .then(response => {
+            this.setState(() => ({ friend: response.data }));
+          })
+          .catch(error => {
+            console.error(error);
+          });
+      };
 
     deleteFriend = () => {
         console.log("Friend deleted");
@@ -38,15 +50,15 @@ class Friend extends Component {
             .catch(err => console.log(err));
     };
 
-    showFriend = event => {
-        event.preventDefault();
-        axios 
-          .get(`http://localhost:5000/friends/${this.props.match.params.id}`)
-          .then(response => {
-            this.setState({ friend: response.data} );
-          })
-          .catch(err => console.log(err));
-      }
+    // showFriend = event => {
+    //     event.preventDefault();
+    //     axios 
+    //       .get(`http://localhost:5000/friends/${this.props.match.params.id}`)
+    //       .then(response => {
+    //         this.setState({ friend: response.data} );
+    //       })
+    //       .catch(err => console.log(err));
+    //   }
 
 
     render() {
@@ -54,11 +66,11 @@ class Friend extends Component {
         
         <div className="friend">
         
-            <div>
+            {/* <div>
                 <p>name: { this.state.friend.name } </p>
                 <p>age:  { this.state.friend.age }</p>
                 <p>email: { this.state.friend.email }</p>
-            </div>
+            </div> */}
             
             <p>name: { this.props.friend.name } </p>
             <p>age:  {this.props.friend.age }</p>
@@ -66,7 +78,7 @@ class Friend extends Component {
              
             <span onClick={ this.deleteFriend }>Delete</span>
             <NavLink exact to={`friends/${this.props.friend.id}`}>
-                <span onClick={ this.showFriend }>Update</span>
+                <span onClick={ this.fetchFriend }>Update</span>
             </NavLink>  
         </div>
          );
