@@ -1,37 +1,76 @@
-import React from 'react';
+import React, { Component } from 'react';
 import axios from "axios";
 import { NavLink } from "react-router-dom";
 
 import './Friend.css';
 
-function Friend (props) {
+class Friend extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            friend: null
+          }  
+        };
+      
 
-    const deleteFriend = () => {
+    componentDidMount() {
+        axios
+        .get("http://localhost:5000/friends")
+        .then(response => {
+          this.setState({ friends: response.data })
+        })
+        .catch(err => console.log(err));
+      }
+
+    updateFriend = newFriend => {
+        this.setState({ friend: newFriend });
+    };  
+
+    deleteFriend = () => {
         console.log("Friend deleted");
 
         axios
-            .delete(`http://localhost:5000/friends/${props.friend.id}`)
+            .delete(`http://localhost:5000/friends/${this.props.friend.id}`)
             .then(response => {
-                props.updateFriends(response.data);
-                props.history.push("/friends");
+                this.props.updateFriends(response.data);
+                this.props.history.push("/friends");
             })
             .catch(err => console.log(err));
     };
 
+    showFriend = event => {
+        event.preventDefault();
+        axios 
+          .get(`http://localhost:5000/friends/${this.props.match.params.id}`)
+          .then(response => {
+            this.setState({ friend: response.data} );
+          })
+          .catch(err => console.log(err));
+      }
 
-    return (
+
+    render() {
+        return (
         
         <div className="friend">
         
-            <p>name: { props.friend.name } </p>
-            <p>age:  {props.friend.age }</p>
-            <p>email:  {props.friend.email }</p> 
-            <span onClick={ deleteFriend }>Delete</span>
-            <NavLink exact to={`friends/${props.friend.id}`}>
-                <span>Update</span>
+            <div>
+                <p>name: { this.state.friend.name } </p>
+                <p>age:  { this.state.friend.age }</p>
+                <p>email: { this.state.friend.email }</p>
+            </div>
+            
+            <p>name: { this.props.friend.name } </p>
+            <p>age:  {this.props.friend.age }</p>
+            <p>email:  {this.props.friend.email }</p>
+             
+            <span onClick={ this.deleteFriend }>Delete</span>
+            <NavLink exact to={`friends/${this.props.friend.id}`}>
+                <span onClick={ this.showFriend }>Update</span>
             </NavLink>  
         </div>
-    )
+         );
+    }
 }
 
 export default Friend;
