@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
-import { Route, NavLink } from "react-router-dom";
-import axios from "axios";
 
 class ChangeFriend extends Component {
-    constructor() {
-      super();
+    constructor(props) {
+      super(props);
       this.state = {
         friend: {
           name: "",
@@ -15,23 +13,24 @@ class ChangeFriend extends Component {
     }
 
     updateHandler = e => {
+      e.persist();
+      this.setState(prevState => ({
+        friend: { ...prevState.friend, [e.target.name]: e.target.value}
+      }));
+    };
 
-    }
 
     render() {
       return (
         
-          <div className="App">
-            <NavLink exact to="/">
-              Home
-            </NavLink>
-            <NavLink exact to="/friends">
-              Friends
-            </NavLink>
-            <Route exact path="/friends" render={props => <Friends {...props} friends={ this.state.friends } updateFriends={ this.updateFriends } changeFriend={ this.changeFriend }/>} /> 
-            <Form addFriend={ this.addFriend } changeHandler={ this.changeHandler } name={ this.state.friend.name } age={ this.state.friend.age } email={ this.state.friend.email }  />
-            
-          </div>
+        <div>
+        <form onSubmit={ this.props.changeFriend('1', this.state.friend) }>
+            <input value={ this.state.name } name="name" placeholder="name" onChange={ this.updateHandler }/>
+            <input value={ this.state.age } name="age" placeholder="age" onChange={ this.updateHandler }/>
+            <input value={ this.state.email } name="email" placeholder="email" onChange={ this.updateHandler }/>
+            <button type="submit">Update Friend</button>
+        </form>
+       </div>
         
       );
     }
